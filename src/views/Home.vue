@@ -6,7 +6,10 @@
         <div class="container">
           <div class="magazine">
             <div ignore="1" class="next-button"></div>
-            <div v-for="item in allPages" :key="item.page">{{ item.name }}</div>
+            <div v-for="(item, index) in allPages" :key="index">
+              <div class="gradient" v-if="index!==0 && index!==allPages.length-1"></div>
+              <img style="width:100%;height:100%"  :src="item.name" alt="">
+            </div>
             <div ignore="1" class="previous-button"></div>
           </div>
         </div>
@@ -26,27 +29,27 @@ export default {
       allPages: [
         {
           page: 1,
-          name: "11111",
+          name: require("@/assets/1.jpeg"),
         },
         {
           page: 2,
-          name: "2222222",
+          name: require("@/assets/2.jpg"),
         },
         {
           page: 3,
-          name: "333333333",
+          name: require("@/assets/3.jpg"),
         },
         {
           page: 4,
-          name: "44444444",
+          name: require("@/assets/4.jpeg"),
         },
         {
           page: 5,
-          name: "55555555555",
+          name: require("@/assets/5.jpg"),
         },
         {
           page: 6,
-          name: "6666666666",
+          name: require("@/assets/6.jpeg"),
         },
       ],
     };
