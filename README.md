@@ -1,5 +1,8 @@
 # album
 
+基于turn4.js 的vue 翻书效果 H5横竖屏效果
+
+
 ## Project setup
 ```
 yarn install
