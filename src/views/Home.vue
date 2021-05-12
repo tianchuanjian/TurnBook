@@ -7,6 +7,7 @@
           <div class="magazine">
             <div ignore="1" class="next-button"></div>
             <div v-for="(item, index) in allPages" :key="index">
+              <!-- 书中间的阴影 -->
               <div class="gradient" v-if="index!==0 && index!==allPages.length-1"></div>
               <img style="width:100%;height:100%"  :src="item.name" alt="">
             </div>
