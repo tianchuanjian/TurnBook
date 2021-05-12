@@ -10,9 +10,9 @@ yarn install
 yarn serve
 ```
 
-### Compiles and minifies for production
+### Compiles and minifies for production/stage
 ```
-yarn build
+yarn build[:prod/:stage] 
 ```
 
 ### Lints and fixes files
