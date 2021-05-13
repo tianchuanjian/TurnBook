@@ -15,6 +15,31 @@
           </div>
         </div>
       </div>
+      <!-- Thumbnails -->
+      <div class="thumbnails">
+        <div>
+          <ul>
+            <li class="i">
+              <img src="@/assets/1.jpeg" width="40" height="60" class="page-1">
+              <span>1</span>
+            </li>
+            <li class="d">
+              <img src="@/assets/2.jpg" width="40" height="60" class="page-2">
+              <img src="@/assets/3.jpg" width="40" height="60" class="page-3">
+              <span>2-3</span>
+            </li>
+            <li class="d">
+              <img src="@/assets/4.jpeg" width="40" height="60" class="page-4">
+              <img src="@/assets/5.jpg" width="40" height="60" class="page-5">
+              <span>4-5</span>
+            </li>
+            <li class="i">
+              <img src="@/assets/6.jpeg" width="40" height="60" class="page-6">
+              <span>6</span>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,7 +50,6 @@ export default {
   components: {},
   data() {
     return {
-      value: "",
       page: 6,
       allPages: [
         {
@@ -67,12 +91,12 @@ export default {
           "extras/magazine.css",
         ],
         complete: this.loadApp,
+        
       });
     });
   },
   methods: {
     loadApp() {
-      
       $("#canvas").fadeIn(1000);
       var flipbook = $(".magazine");
       // Check if the CSS was already loaded
@@ -81,7 +105,10 @@ export default {
         setTimeout(loadApp, 10);
         return;
       }
-     
+      // 翻书音效
+      let audio = new Audio()
+      audio.src = require("@/assets/book2.mp3")
+      audio.loop = true
       // Create the flipbook
       flipbook.turn({
         width: 922,
@@ -93,6 +120,7 @@ export default {
         elevation: 50,
         pages: this.page,
         when: {
+          // 翻页完成之前被启动(最终没翻页不执行)
           turning: function (event, page, view) {
             var book = $(this),
               currentPage = book.turn("page"),
@@ -107,6 +135,7 @@ export default {
               .parent()
               .addClass("current");
           },
+          // 翻页完成之后启动
           turned: function (event, page, view) {
             disableControls(page);
             $(this).turn("center");
@@ -114,11 +143,25 @@ export default {
               $(this).turn("peel", "br");
             }
           },
+          // 当当前范围需要某些页面时 触发此事件
           // missing: function (event, pages) {
           //   for (var i = 0; i < pages.length; i++) {
           //     addPage(pages[i], $(this));
           //   }
           // },
+          // 页面任何一个动作开始时候 触发
+          start: function (event, page, pageObj) {
+            const book = $(this),
+            currentPage = book.turn("page");
+            if(currentPage !== 1){
+              audio.play();
+            }
+          },
+          // 页面任何一个动作结束时候 触发
+          end: function (event, page, pageObj) {
+            audio.pause()
+            audio.load();
+          }
         },
       });
       // Zoom.js
@@ -318,7 +361,7 @@ export default {
           else if ($(this).hasClass("zoom-icon-out"))
             $(".magazine-viewport").zoom("zoomOut");
         });
-      $("#canvas").hide();
+      // $("#canvas").hide();
     }
   },
 };
