@@ -361,7 +361,7 @@ export default {
           else if ($(this).hasClass("zoom-icon-out"))
             $(".magazine-viewport").zoom("zoomOut");
         });
-      // $("#canvas").hide();
+      $("#canvas").hide();
     }
   },
 };
